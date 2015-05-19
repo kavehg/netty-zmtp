@@ -33,6 +33,8 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.handler.execution.ExecutionHandler;
 //import org.jboss.netty.handler.execution.OrderedMemoryAwareThreadPoolExecutor;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import org.junit.After;
@@ -137,7 +139,7 @@ public class ProtocolViolationTests {
         for (int i = 0; i < payloadSize; i++) {
             payload.append('0');
         }
-        channel.write(ChannelBuffers.copiedBuffer(payload.toString().getBytes()));
+        channel.write(Unpooled.copiedBuffer(payload.toString().getBytes()));
 
         Thread.sleep(100);
 

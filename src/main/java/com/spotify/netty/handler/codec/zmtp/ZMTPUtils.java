@@ -20,6 +20,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffers;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import java.util.List;
 import java.util.UUID;
@@ -233,7 +234,7 @@ public class ZMTPUtils {
         if (data == null) {
             return null;
         }
-        return toString(ByteBuf.wrappedBuffer(data));
+        return toString(Unpooled.wrappedBuffer(data));
     }
 
     /**

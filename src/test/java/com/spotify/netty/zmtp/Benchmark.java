@@ -25,6 +25,7 @@ import com.spotify.netty.handler.codec.zmtp.ZMTPUtils;
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -47,7 +48,7 @@ public class Benchmark {
         long sum = 0;
         for (long i = 0; i < 1000000; i++) {
             for (long j = 0; j < 1000; j++) {
-                final ByteBuf buffer = ChannelBuffers.buffer(ZMTPUtils.messageSize(message, true, 1));
+                final ByteBuf buffer = Unpooled.buffer(ZMTPUtils.messageSize(message, true, 1));
                 ZMTPUtils.writeMessage(message, buffer, true, 1);
                 message = parser.parse(buffer).getMessage();
 

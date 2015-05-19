@@ -3,6 +3,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Test;
 
 import static com.spotify.netty.handler.codec.zmtp.TestUtil.bytes;
@@ -56,7 +57,7 @@ public class ZMTPFramingEncoderTest {
         ZMTPMessage message = new ZMTPMessage(
                 asList(ZMTPFrame.create("id0")),
                 asList(ZMTPFrame.create(LARGE_FILL)));
-        ByteBuf buf = ChannelBuffers.dynamicBuffer();
+        ByteBuf buf = Unpooled.buffer();
         buf.writeBytes(bytes(1, 3, 0x69, 0x64, 0x30, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0x01, 0xf4));
         buf.writeBytes(LARGE_FILL);
 

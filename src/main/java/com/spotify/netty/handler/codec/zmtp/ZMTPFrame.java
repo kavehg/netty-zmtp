@@ -19,6 +19,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffer;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
@@ -52,7 +53,7 @@ public class ZMTPFrame {
     public byte[] getData() {
         if (hasData()) {
             final byte[] bytes = new byte[size()];
-            wrappedBuffer(data).readBytes(bytes);
+            Unpooled.wrappedBuffer(data).readBytes(bytes);
             return bytes;
         } else {
             return null;
@@ -66,7 +67,7 @@ public class ZMTPFrame {
      */
     public ByteBuf getDataBuffer() {
         if (data == null) {
-            return EMPTY_BUFFER;
+            return Unpooled.EMPTY_BUFFER;
         } else {
             return data;
         }

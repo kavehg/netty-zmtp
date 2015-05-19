@@ -72,7 +72,7 @@ class PipelineTester {
 
             @Override
             public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-                emittedOutside.put((ChannelBuffer) e.getMessage());
+                emittedOutside.put((ByteBuf) e.getMessage());
             }
         });
         cb.connect(address).awaitUninterruptibly();

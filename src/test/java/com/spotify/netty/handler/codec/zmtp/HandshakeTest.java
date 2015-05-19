@@ -5,6 +5,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffers;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -107,7 +108,7 @@ public class HandshakeTest {
                 new ZMTPSession(ZMTPConnectionType.Addressed, 0, FOO, ZMTPSocketType.PUB), true);
         h.setListener(handshakeListener);
         cmp(h.onConnect(), 0xff, 0, 0, 0, 0, 0, 0, 0, 0x04, 0x7f);
-        ChannelBuffer cb = buf(
+        ByteBuf cb = buf(
                 0xff, 0, 0, 0, 0, 0, 0, 0, 0, 0x7f, 0x01, 0x01, 0x00, 0x03, 0x62, 0x61, 0x72);
         boolean done1 = h.inputOutput(cb, out);
         assertFalse(done1);
@@ -198,7 +199,7 @@ public class HandshakeTest {
     @Test
     public void testDetectProtocolVersion() {
         try {
-            ZMTP20Codec.detectProtocolVersion(ChannelBuffers.wrappedBuffer(new byte[0]));
+            ZMTP20Codec.detectProtocolVersion(Unpooled.wrappedBuffer(new byte[0]));
             fail("Should have thown IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
             // ignore

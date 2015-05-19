@@ -3,6 +3,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Assert;
 
 /**
@@ -19,13 +20,13 @@ class TestUtil {
     }
 
     public static ByteBuf buf(int... bytes) {
-        ByteBuf cb = ChannelBuffers.dynamicBuffer(bytes.length);
+        ByteBuf cb = Unpooled.buffer(bytes.length);
         cb.writeBytes(bytes(bytes));
         return cb;
     }
 
     public static ByteBuf buf(byte[] data) {
-        ByteBuf cb = ChannelBuffers.dynamicBuffer(data.length);
+        ByteBuf cb = Unpooled.buffer(data.length);
         cb.writeBytes(data);
         return cb;
     }
@@ -69,7 +70,7 @@ class TestUtil {
      * @return a clone.
      */
     public static ByteBuf clone(ByteBuf buf) {
-        return ChannelBuffers.wrappedBuffer(buf.array());
+        return Unpooled.wrappedBuffer(buf.array());
     }
 
   /*

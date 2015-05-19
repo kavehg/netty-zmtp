@@ -24,6 +24,7 @@ import com.google.common.util.concurrent.Uninterruptibles;
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
@@ -74,7 +75,7 @@ public class ZMTPMessageParserTest {
 
     @Test
     public void testZMTP1LongFrameSize() throws ZMTPMessageParsingException {
-        ByteBuf buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = Unpooled.buffer();
         buffer.writeByte(0xFF);
         ZMTPMessageParser parser = new ZMTPMessageParser(false, 1024, 1);
         ZMTPParsedMessage msg = parser.parse(buffer);
@@ -84,7 +85,7 @@ public class ZMTPMessageParserTest {
 
     @Test
     public void testZMTP1BufferLengthEmpty() throws ZMTPMessageParsingException {
-        ByteBuf buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = Unpooled.buffer();
         ZMTPMessageParser parser = new ZMTPMessageParser(false, 1024, 1);
         ZMTPParsedMessage msg = parser.parse(buffer);
         assertNull("Empty ChannelBuffer should result in an empty ZMTPParsedMessage",
@@ -375,7 +376,7 @@ public class ZMTPMessageParserTest {
 
     public static ByteBuf serialize(final boolean enveloped, final ZMTPMessage message,
                                           int version) {
-        final ByteBuf buffer = ChannelBuffers.buffer(ZMTPUtils.messageSize(
+        final ByteBuf buffer = Unpooled.buffer(ZMTPUtils.messageSize(
                 message, enveloped, version));
         ZMTPUtils.writeMessage(message, buffer, enveloped, version);
         return buffer;

@@ -16,6 +16,8 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
+import io.netty.util.CharsetUtil;
+
 import java.nio.charset.Charset;
 import java.util.AbstractList;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 
 import static com.spotify.netty.handler.codec.zmtp.ZMTPFrame.EMPTY_FRAME;
 import static java.util.Arrays.asList;
-import static org.jboss.netty.util.CharsetUtil.UTF_8;
+//import static org.jboss.netty.util.CharsetUtil.UTF_8;
 
 public class ZMTPMessage {
 
@@ -46,14 +48,14 @@ public class ZMTPMessage {
      * Create a new message from a string frames, using UTF-8 encoding.
      */
     public static ZMTPMessage fromStringsUTF8(final boolean enveloped, final String... frames) {
-        return fromStrings(enveloped, UTF_8, frames);
+        return fromStrings(enveloped, CharsetUtil.UTF_8, frames);
     }
 
     /**
      * Create a new message from a list of string frames, using UTF-8 encoding.
      */
     public static ZMTPMessage fromStringsUTF8(final boolean enveloped, final List<String> frames) {
-        return fromStrings(enveloped, UTF_8, frames);
+        return fromStrings(enveloped, CharsetUtil.UTF_8, frames);
     }
 
     /**

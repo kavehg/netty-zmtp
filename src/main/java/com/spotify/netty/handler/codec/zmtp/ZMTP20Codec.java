@@ -4,6 +4,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffers;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 
 /**
  * A ZMTP20Codec instance is a ChannelUpstreamHandler that, when placed in a ChannelPipeline,
@@ -51,7 +52,7 @@ public class ZMTP20Codec extends CodecBase {
                 buffer.resetReaderIndex();
                 // when a ZMTP/1.0 peer is detected, just send the identity bytes. Together
                 // with the compatibility signature it makes for a valid ZMTP/1.0 greeting.
-                out.write(ChannelBuffers.wrappedBuffer(session.getLocalIdentity()));
+                out.write(Unpooled.wrappedBuffer(session.getLocalIdentity()));
                 done(version, ZMTP10Codec.readZMTP1RemoteIdentity(buffer));
                 return true;
             } else {
@@ -98,7 +99,7 @@ public class ZMTP20Codec extends CodecBase {
      * @return a ChannelBuffer containing the greeting
      */
     private ByteBuf makeZMTP2Greeting(boolean includeSignature) {
-        ByteBuf out = ByteBuf.dynamicBuffer();
+        ByteBuf out = Unpooled.buffer();
         if (includeSignature) {
             ZMTPUtils.encodeLength(0, out, true);
             // last byte of signature
@@ -123,7 +124,7 @@ public class ZMTP20Codec extends CodecBase {
      * message as specified in the Backwards Compatibility section of http://rfc.zeromq.org/spec:15
      */
     private ByteBuf makeZMTP2CompatSignature() {
-        ByteBuf out = ByteBuf.dynamicBuffer();
+        ByteBuf out = Unpooled.buffer();
         ZMTPUtils.encodeLength(session.getLocalIdentity().length + 1, out, true);
         out.writeByte(0x7f);
         return out;

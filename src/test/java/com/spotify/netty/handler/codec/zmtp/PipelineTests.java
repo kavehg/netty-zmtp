@@ -8,6 +8,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.Channels;
 //import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import org.junit.Assert;
@@ -34,7 +35,7 @@ public class PipelineTests {
      */
     @Test
     public void testPipelineTester() {
-        final ByteBuf buf = ByteBuf.wrappedBuffer("Hello, world".getBytes());
+        final ByteBuf buf = Unpooled.wrappedBuffer("Hello, world".getBytes());
         ChannelPipeline pipeline = Channels.pipeline(new SimpleChannelUpstreamHandler() {
 
             @Override
@@ -52,7 +53,7 @@ public class PipelineTests {
 
         cmp(another, (ByteBuf) pipelineTester.readServer());
 
-        another = ChannelBuffers.wrappedBuffer("bar".getBytes());
+        another = Unpooled.wrappedBuffer("bar".getBytes());
         pipelineTester.writeServer(TestUtil.clone(another));
         cmp(another, pipelineTester.readClient());
     }
@@ -116,7 +117,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ByteBuf cb = ByteBuf.dynamicBuffer();
+        ByteBuf cb = Unpooled.buffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -157,7 +158,7 @@ public class PipelineTests {
         pt.writeClient(first);
         pt.writeClient(second);
 
-        ByteBuf cb = ByteBuf.dynamicBuffer();
+        ByteBuf cb = Unpooled.buffer();
         // two octet envelope delimiter
         cb.writeBytes(bytes(0x01, 0x01));
         // content frame size + flag octet
@@ -187,7 +188,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ByteBuf cb = ByteBuf.dynamicBuffer();
+        ByteBuf cb = Unpooled.buffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -197,7 +198,7 @@ public class PipelineTests {
 
         pt.writeClient(cb);
 
-        cb = ChannelBuffers.dynamicBuffer();
+        cb = Unpooled.buffer();
         // fragmented second part of frame size
         cb.writeBytes(bytes(0, 0, 0, 0, 0x01, 0x05, 0));
         // payload
@@ -225,7 +226,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ByteBuf cb = ByteBuf.dynamicBuffer();
+        ByteBuf cb = Unpooled.buffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -235,7 +236,7 @@ public class PipelineTests {
 
         pt.writeClient(cb);
 
-        cb = ChannelBuffers.dynamicBuffer();
+        cb = Unpooled.buffer();
         // fragmented second part of frame size
         cb.writeBytes(bytes(0, 0, 0, 0, 0, 0, 0x01, 0x05, 0));
         // payload
@@ -264,7 +265,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ByteBuf cb = ByteBuf.dynamicBuffer();
+        ByteBuf cb = Unpooled.buffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -289,7 +290,7 @@ public class PipelineTests {
         cmp(buf(LONG_MSG), body.get(0).getDataBuffer());
 
         // send the rest of the second message
-        cb = ChannelBuffers.dynamicBuffer();
+        cb = Unpooled.buffer();
         // fragmented second part of frame size
         cb.writeBytes(bytes(0, 0, 0, 0, 0x01, 0x05, 0));
         // payload

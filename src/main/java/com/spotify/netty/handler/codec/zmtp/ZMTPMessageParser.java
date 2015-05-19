@@ -222,7 +222,7 @@ public class ZMTPMessageParser {
     /**
      * Parse a frame header.
      */
-    private boolean parseZMTP1Header(final ChannelBuffer buffer) throws ZMTPMessageParsingException {
+    private boolean parseZMTP1Header(final ByteBuf buffer) throws ZMTPMessageParsingException {
         final long len = ZMTPUtils.decodeLength(buffer);
 
         if (len > Integer.MAX_VALUE) {
