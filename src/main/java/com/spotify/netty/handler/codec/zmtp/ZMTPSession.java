@@ -16,7 +16,7 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.channel.Channel;
+//import org.jboss.netty.channel.Channel;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.SocketAddress;

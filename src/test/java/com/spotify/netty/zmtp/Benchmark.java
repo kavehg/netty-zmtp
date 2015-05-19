@@ -22,8 +22,8 @@ import com.spotify.netty.handler.codec.zmtp.ZMTPMessageParser;
 import com.spotify.netty.handler.codec.zmtp.ZMTPMessageParsingException;
 import com.spotify.netty.handler.codec.zmtp.ZMTPUtils;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.buffer.ChannelBuffers;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -31,29 +31,29 @@ import static java.util.Arrays.asList;
 
 public class Benchmark {
 
-  @Ignore("this is a benchmark")
-  @Test
-  public void benchmarkEncoding() throws ZMTPMessageParsingException {
-    final ProgressMeter meter = new ProgressMeter("messages");
-    ZMTPMessage message = new ZMTPMessage(
-        asList(ZMTPFrame.create("first identity frame"),
-               ZMTPFrame.create("second identity frame")),
-        asList(ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
-               ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
-               ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
-               ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata")));
-    final ZMTPMessageParser parser = new ZMTPMessageParser(true, 1024 * 1024, 1);
-    long sum = 0;
-    for (long i = 0; i < 1000000; i++) {
-      for (long j = 0; j < 1000; j++) {
-        final ChannelBuffer buffer = ChannelBuffers.buffer(ZMTPUtils.messageSize(message, true, 1));
-        ZMTPUtils.writeMessage(message, buffer, true, 1);
-        message = parser.parse(buffer).getMessage();
+    @Ignore("this is a benchmark")
+    @Test
+    public void benchmarkEncoding() throws ZMTPMessageParsingException {
+        final ProgressMeter meter = new ProgressMeter("messages");
+        ZMTPMessage message = new ZMTPMessage(
+                asList(ZMTPFrame.create("first identity frame"),
+                        ZMTPFrame.create("second identity frame")),
+                asList(ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
+                        ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
+                        ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata"),
+                        ZMTPFrame.create("datadatadatadatadatadatadatadatadatadata")));
+        final ZMTPMessageParser parser = new ZMTPMessageParser(true, 1024 * 1024, 1);
+        long sum = 0;
+        for (long i = 0; i < 1000000; i++) {
+            for (long j = 0; j < 1000; j++) {
+                final ChannelBuffer buffer = ChannelBuffers.buffer(ZMTPUtils.messageSize(message, true, 1));
+                ZMTPUtils.writeMessage(message, buffer, true, 1);
+                message = parser.parse(buffer).getMessage();
 
-        sum += buffer.readableBytes();
-      }
-      meter.inc(1000, 0);
+                sum += buffer.readableBytes();
+            }
+            meter.inc(1000, 0);
+        }
+        System.out.println(sum);
     }
-    System.out.println(sum);
-  }
 }

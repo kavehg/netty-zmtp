@@ -1,13 +1,16 @@
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.handler.codec.replay.ReplayingDecoder;
-import org.jboss.netty.handler.codec.replay.VoidEnum;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.channel.Channel;
+//import org.jboss.netty.channel.ChannelHandlerContext;
+//import org.jboss.netty.channel.ChannelPipeline;
+//import org.jboss.netty.channel.ChannelStateEvent;
+//import org.jboss.netty.channel.Channels;
+//import org.jboss.netty.handler.codec.replay.ReplayingDecoder;
+//import org.jboss.netty.handler.codec.replay.VoidEnum;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
 
 /**
  * An abstract base class for common functionality to the ZMTP codecs.

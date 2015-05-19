@@ -1,3 +1,5 @@
+This codebase currently does not compile
+
 This is a ZeroMQ codec for Netty that aims to implement ZMTP, the ZeroMQ
 Message Transport Protocol versions 1.0 and 2.0 as specified in
 http://rfc.zeromq.org/spec:13 and http://rfc.zeromq.org/spec:15.

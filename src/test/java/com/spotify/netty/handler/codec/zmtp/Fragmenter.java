@@ -18,32 +18,32 @@ package com.spotify.netty.handler.codec.zmtp;
 
 class Fragmenter {
 
-  static interface Consumer {
-    void fragments(int[] limits, int count) throws Exception;
-  }
-
-  private final int[] limits;
-  private final int length;
-
-  public Fragmenter(final int length) {
-    this.limits = new int[length];
-    this.length = length;
-  }
-
-  public void fragment(final Consumer consumer) throws Exception {
-    fragment(consumer, 0, 0);
-  }
-
-  private void fragment(final Consumer consumer, final int count, final int limit)
-      throws Exception {
-    if (limit == length) {
-      consumer.fragments(limits, count);
-      return;
+    static interface Consumer {
+        void fragments(int[] limits, int count) throws Exception;
     }
 
-    for (int o = limit + 1; o <= length; o++) {
-      limits[count] = o;
-      fragment(consumer, count + 1, o);
+    private final int[] limits;
+    private final int length;
+
+    public Fragmenter(final int length) {
+        this.limits = new int[length];
+        this.length = length;
     }
-  }
+
+    public void fragment(final Consumer consumer) throws Exception {
+        fragment(consumer, 0, 0);
+    }
+
+    private void fragment(final Consumer consumer, final int count, final int limit)
+            throws Exception {
+        if (limit == length) {
+            consumer.fragments(limits, count);
+            return;
+        }
+
+        for (int o = limit + 1; o <= length; o++) {
+            limits[count] = o;
+            fragment(consumer, count + 1, o);
+        }
+    }
 }

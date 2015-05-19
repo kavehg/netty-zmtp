@@ -16,7 +16,7 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.buffer.ChannelBuffer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,8 +24,7 @@ import java.util.List;
 
 import static com.spotify.netty.handler.codec.zmtp.ZMTPUtils.MORE_FLAG;
 import static java.nio.ByteOrder.BIG_ENDIAN;
-import static java.lang.Math.min;
-import static org.jboss.netty.buffer.ChannelBuffers.swapLong;
+//import static org.jboss.netty.buffer.ChannelBuffers.swapLong;
 
 /**
  * Decodes ZMTP messages from a channel buffer, reading and accumulating frame by frame, keeping

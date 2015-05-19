@@ -1,7 +1,7 @@
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.buffer.ChannelBuffers;
 
 /**
  * A ZMTP20Codec instance is a ChannelUpstreamHandler that, when placed in a ChannelPipeline,

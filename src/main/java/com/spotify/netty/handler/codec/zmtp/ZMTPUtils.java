@@ -16,14 +16,14 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.buffer.ChannelBuffers;
 
 import java.util.List;
 import java.util.UUID;
 
 import static java.nio.ByteOrder.BIG_ENDIAN;
-import static org.jboss.netty.buffer.ChannelBuffers.swapLong;
+//import static org.jboss.netty.buffer.ChannelBuffers.swapLong;
 
 /**
  * Helper utilities for zmtp protocol

@@ -26,20 +26,21 @@ import static com.spotify.netty.handler.codec.zmtp.ZMTPSocketType.DEALER;
 
 public class ZMTP20CodecTest {
 
-  @Rule public ExpectedException expectedException = ExpectedException.none();
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
-  @Test
-  public void verifyRequiresSocketType() {
-    final ZMTPSocketType socketType = null;
-    final ZMTPSession session = new ZMTPSession(Addressed, 1024, socketType);
-    expectedException.expect(IllegalArgumentException.class);
-    expectedException.expectMessage("ZMTP/2.0 requires a socket type");
-    new ZMTP20Codec(session, true);
-  }
+    @Test
+    public void verifyRequiresSocketType() {
+        final ZMTPSocketType socketType = null;
+        final ZMTPSession session = new ZMTPSession(Addressed, 1024, socketType);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ZMTP/2.0 requires a socket type");
+        new ZMTP20Codec(session, true);
+    }
 
-  @Test
-  public void testConstruction() {
-    final ZMTPSession session = new ZMTPSession(Addressed, 1024, DEALER);
-    new ZMTP20Codec(session, true);
-  }
+    @Test
+    public void testConstruction() {
+        final ZMTPSession session = new ZMTPSession(Addressed, 1024, DEALER);
+        new ZMTP20Codec(session, true);
+    }
 }

@@ -28,33 +28,33 @@ import static org.junit.Assert.assertEquals;
 
 public class FragmenterTest {
 
-  static final int SIZE = 4;
+    static final int SIZE = 4;
 
-  static final int[][] EXPECTED = {
-      {1, 2, 3, 4},
-      {1, 2, 4},
-      {1, 3, 4},
-      {1, 4},
-      {2, 3, 4},
-      {2, 4},
-      {3, 4},
-      {4},
-  };
+    static final int[][] EXPECTED = {
+            {1, 2, 3, 4},
+            {1, 2, 4},
+            {1, 3, 4},
+            {1, 4},
+            {2, 3, 4},
+            {2, 4},
+            {3, 4},
+            {4},
+    };
 
-  @Test
-  public void test() throws Exception {
-    final List<int[]> output = Lists.newArrayList();
-    final Fragmenter fragmenter = new Fragmenter(SIZE);
-    fragmenter.fragment(new Fragmenter.Consumer() {
-      @Override
-      public void fragments(final int[] limits, final int count) {
-        output.add(Arrays.copyOf(limits, count));
-      }
-    });
+    @Test
+    public void test() throws Exception {
+        final List<int[]> output = Lists.newArrayList();
+        final Fragmenter fragmenter = new Fragmenter(SIZE);
+        fragmenter.fragment(new Fragmenter.Consumer() {
+            @Override
+            public void fragments(final int[] limits, final int count) {
+                output.add(Arrays.copyOf(limits, count));
+            }
+        });
 
-    assertEquals(EXPECTED.length, output.size());
-    for (int i = 0; i < EXPECTED.length; i++) {
-      assertArrayEquals(EXPECTED[i], output.get(i));
+        assertEquals(EXPECTED.length, output.size());
+        for (int i = 0; i < EXPECTED.length; i++) {
+            assertArrayEquals(EXPECTED[i], output.get(i));
+        }
     }
-  }
 }

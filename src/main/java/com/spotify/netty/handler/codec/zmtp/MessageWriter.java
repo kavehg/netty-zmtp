@@ -16,10 +16,13 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.Channels;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.channel.ChannelFuture;
+//import org.jboss.netty.channel.ChannelHandlerContext;
+//import org.jboss.netty.channel.Channels;
+
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
 
 class MessageWriter {
 

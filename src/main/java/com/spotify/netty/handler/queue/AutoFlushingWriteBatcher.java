@@ -16,11 +16,12 @@
 
 package com.spotify.netty.handler.queue;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.handler.queue.BufferedWriteHandler;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.channel.ChannelHandlerContext;
+//import org.jboss.netty.channel.ChannelStateEvent;
+//import org.jboss.netty.channel.MessageEvent;
+//import org.jboss.netty.handler.queue.BufferedWriteHandler;
+import io.netty.channel.ChannelHandlerContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ScheduledFuture;

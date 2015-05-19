@@ -16,14 +16,14 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.buffer.ChannelBuffer;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-import static org.jboss.netty.buffer.ChannelBuffers.EMPTY_BUFFER;
-import static org.jboss.netty.buffer.ChannelBuffers.copiedBuffer;
-import static org.jboss.netty.buffer.ChannelBuffers.wrappedBuffer;
+//import static org.jboss.netty.buffer.ChannelBuffers.EMPTY_BUFFER;
+//import static org.jboss.netty.buffer.ChannelBuffers.copiedBuffer;
+//import static org.jboss.netty.buffer.ChannelBuffers.wrappedBuffer;
 
 public class ZMTPFrame {
 

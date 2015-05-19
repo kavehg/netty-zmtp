@@ -16,10 +16,12 @@
 
 package com.spotify.netty.handler.codec.zmtp;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.frame.FrameDecoder;
+//import org.jboss.netty.buffer.ChannelBuffer;
+//import org.jboss.netty.channel.Channel;
+//import org.jboss.netty.channel.ChannelHandlerContext;
+//import org.jboss.netty.handler.codec.frame.FrameDecoder;
+
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * Netty FrameDecoder for zmtp protocol
