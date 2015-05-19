@@ -112,7 +112,7 @@ public class ZMTPFrame {
         if (data.length() == 0) {
             return EMPTY_FRAME;
         } else {
-            return create(copiedBuffer(data, charset));
+            return create(Unpooled.copiedBuffer(data, charset));
         }
     }
 
@@ -123,7 +123,7 @@ public class ZMTPFrame {
         if (data == null || data.length == 0) {
             return EMPTY_FRAME;
         } else {
-            return create(copiedBuffer(data));
+            return create(Unpooled.copiedBuffer(data));
         }
     }
 
@@ -131,7 +131,7 @@ public class ZMTPFrame {
      * Create a new frame from a channel buffer.
      */
     public static ZMTPFrame create(final ByteBuf buf) {
-        if (!buf.readable()) {
+        if (!buf.isReadable()) {
             return EMPTY_FRAME;
         } else {
             return new ZMTPFrame(buf);
