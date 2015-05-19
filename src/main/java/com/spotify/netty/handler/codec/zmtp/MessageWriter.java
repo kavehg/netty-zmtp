@@ -23,15 +23,15 @@ import org.jboss.netty.channel.Channels;
 
 class MessageWriter {
 
-  private final ChannelHandlerContext ctx;
+    private final ChannelHandlerContext ctx;
 
-  MessageWriter(final ChannelHandlerContext ctx) {
-    this.ctx = ctx;
-  }
+    MessageWriter(final ChannelHandlerContext ctx) {
+        this.ctx = ctx;
+    }
 
-  ChannelFuture write(ChannelBuffer msg) {
-    final ChannelFuture future = Channels.future(ctx.getChannel());
-    Channels.write(ctx, future, msg);
-    return future;
-  }
+    ChannelFuture write(ChannelBuffer msg) {
+        final ChannelFuture future = Channels.future(ctx.getChannel());
+        Channels.write(ctx, future, msg);
+        return future;
+    }
 }

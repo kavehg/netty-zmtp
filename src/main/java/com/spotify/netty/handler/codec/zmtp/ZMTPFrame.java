@@ -27,160 +27,160 @@ import static org.jboss.netty.buffer.ChannelBuffers.wrappedBuffer;
 
 public class ZMTPFrame {
 
-  public static final ZMTPFrame EMPTY_FRAME = create();
+    public static final ZMTPFrame EMPTY_FRAME = create();
 
-  private final ChannelBuffer data;
+    private final ChannelBuffer data;
 
-  private ZMTPFrame(final ChannelBuffer data) {
-    this.data = data;
-  }
-
-  /**
-   * @return Is the current frame empty
-   */
-  public boolean hasData() {
-    // Empty frame only contains flag byte
-    return data != null;
-  }
-
-  /**
-   * Returns the data for a frame
-   */
-  @Deprecated
-  public byte[] getData() {
-    if (hasData()) {
-      final byte[] bytes = new byte[size()];
-      wrappedBuffer(data).readBytes(bytes);
-      return bytes;
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Return the channel buffer container the frame data.
-   *
-   * <p>Note: buffer contents and indices must not be modified.
-   */
-  public ChannelBuffer getDataBuffer() {
-    if (data == null) {
-      return EMPTY_BUFFER;
-    } else {
-      return data;
-    }
-  }
-
-  /**
-   * Returns the length of the data
-   */
-  public int size() {
-    return data == null ? 0 : data.readableBytes();
-  }
-
-  /**
-   * Create a frame from a string
-   *
-   * @return a frame containing the string as default byte encoding
-   */
-  static public ZMTPFrame create(final String data) {
-    return create(data.getBytes());
-  }
-
-  /**
-   * Create a new frame from a string
-   *
-   * @param data        String
-   * @param charsetName Used to get the bytes
-   * @return a ZMTP frame containing the byte encoded string
-   */
-  static public ZMTPFrame create(final String data, final String charsetName)
-      throws UnsupportedEncodingException {
-    return create(data, Charset.forName(charsetName));
-  }
-
-  /**
-   * Create a new frame from a string
-   *
-   * @param data    String
-   * @param charset Used to get the bytes
-   * @return a ZMTP frame containing the byte encoded string
-   */
-  public static ZMTPFrame create(final String data, final Charset charset) {
-    if (data.length() == 0) {
-      return EMPTY_FRAME;
-    } else {
-      return create(copiedBuffer(data, charset));
-    }
-  }
-
-  /**
-   * Create a new frame from a byte array.
-   */
-  static public ZMTPFrame create(final byte[] data) {
-    if (data == null || data.length == 0) {
-      return EMPTY_FRAME;
-    } else {
-      return create(copiedBuffer(data));
-    }
-  }
-
-  /**
-   * Create a new frame from a channel buffer.
-   */
-  public static ZMTPFrame create(final ChannelBuffer buf) {
-    if (!buf.readable()) {
-      return EMPTY_FRAME;
-    } else {
-      return new ZMTPFrame(buf);
-    }
-  }
-
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    private ZMTPFrame(final ChannelBuffer data) {
+        this.data = data;
     }
 
-    final ZMTPFrame zmtpFrame = (ZMTPFrame) o;
-
-    if (data != null ? !data.equals(zmtpFrame.data) : zmtpFrame.data != null) {
-      return false;
+    /**
+     * @return Is the current frame empty
+     */
+    public boolean hasData() {
+        // Empty frame only contains flag byte
+        return data != null;
     }
 
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    return data != null ? data.hashCode() : 0;
-  }
-
-  /**
-   * Helper used during decoding of a ZMTP frame
-   *
-   * @param length length of buffer
-   * @return A {@link ZMTPFrame} containg the data read from the buffer.
-   */
-  static public ZMTPFrame read(final ChannelBuffer buffer, final int length) {
-    if (length > 0) {
-      final ChannelBuffer data = buffer.readSlice(length);
-      return new ZMTPFrame(data);
-    } else {
-      return EMPTY_FRAME;
+    /**
+     * Returns the data for a frame
+     */
+    @Deprecated
+    public byte[] getData() {
+        if (hasData()) {
+            final byte[] bytes = new byte[size()];
+            wrappedBuffer(data).readBytes(bytes);
+            return bytes;
+        } else {
+            return null;
+        }
     }
-  }
 
-  @Override
-  public String toString() {
-    return "ZMTPFrame{\"" +
-           ZMTPUtils.toString(getDataBuffer()) +
-           "\"}";
-  }
+    /**
+     * Return the channel buffer container the frame data.
+     * <p/>
+     * <p>Note: buffer contents and indices must not be modified.
+     */
+    public ChannelBuffer getDataBuffer() {
+        if (data == null) {
+            return EMPTY_BUFFER;
+        } else {
+            return data;
+        }
+    }
 
-  public static ZMTPFrame create() {
-    return new ZMTPFrame(null);
-  }
+    /**
+     * Returns the length of the data
+     */
+    public int size() {
+        return data == null ? 0 : data.readableBytes();
+    }
+
+    /**
+     * Create a frame from a string
+     *
+     * @return a frame containing the string as default byte encoding
+     */
+    static public ZMTPFrame create(final String data) {
+        return create(data.getBytes());
+    }
+
+    /**
+     * Create a new frame from a string
+     *
+     * @param data        String
+     * @param charsetName Used to get the bytes
+     * @return a ZMTP frame containing the byte encoded string
+     */
+    static public ZMTPFrame create(final String data, final String charsetName)
+            throws UnsupportedEncodingException {
+        return create(data, Charset.forName(charsetName));
+    }
+
+    /**
+     * Create a new frame from a string
+     *
+     * @param data    String
+     * @param charset Used to get the bytes
+     * @return a ZMTP frame containing the byte encoded string
+     */
+    public static ZMTPFrame create(final String data, final Charset charset) {
+        if (data.length() == 0) {
+            return EMPTY_FRAME;
+        } else {
+            return create(copiedBuffer(data, charset));
+        }
+    }
+
+    /**
+     * Create a new frame from a byte array.
+     */
+    static public ZMTPFrame create(final byte[] data) {
+        if (data == null || data.length == 0) {
+            return EMPTY_FRAME;
+        } else {
+            return create(copiedBuffer(data));
+        }
+    }
+
+    /**
+     * Create a new frame from a channel buffer.
+     */
+    public static ZMTPFrame create(final ChannelBuffer buf) {
+        if (!buf.readable()) {
+            return EMPTY_FRAME;
+        } else {
+            return new ZMTPFrame(buf);
+        }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final ZMTPFrame zmtpFrame = (ZMTPFrame) o;
+
+        if (data != null ? !data.equals(zmtpFrame.data) : zmtpFrame.data != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return data != null ? data.hashCode() : 0;
+    }
+
+    /**
+     * Helper used during decoding of a ZMTP frame
+     *
+     * @param length length of buffer
+     * @return A {@link ZMTPFrame} containg the data read from the buffer.
+     */
+    static public ZMTPFrame read(final ChannelBuffer buffer, final int length) {
+        if (length > 0) {
+            final ChannelBuffer data = buffer.readSlice(length);
+            return new ZMTPFrame(data);
+        } else {
+            return EMPTY_FRAME;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ZMTPFrame{\"" +
+                ZMTPUtils.toString(getDataBuffer()) +
+                "\"}";
+    }
+
+    public static ZMTPFrame create() {
+        return new ZMTPFrame(null);
+    }
 }
