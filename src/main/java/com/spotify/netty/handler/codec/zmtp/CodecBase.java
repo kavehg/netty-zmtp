@@ -9,6 +9,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.handler.codec.replay.ReplayingDecoder;
 //import org.jboss.netty.handler.codec.replay.VoidEnum;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 
@@ -42,12 +43,12 @@ abstract class CodecBase extends ReplayingDecoder<VoidEnum> {
         this.session.setChannel(ctx.getChannel());
     }
 
-    abstract ChannelBuffer onConnect();
+    abstract ByteBuf onConnect();
 
-    abstract boolean inputOutput(final ChannelBuffer buffer, final MessageWriter out) throws ZMTPException;
+    abstract boolean inputOutput(final ByteBuf buffer, final MessageWriter out) throws ZMTPException;
 
     @Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer,
+    protected Object decode(ChannelHandlerContext ctx, Channel channel, ByteBuf buffer,
                             VoidEnum _) throws ZMTPException {
         buffer.markReaderIndex();
         boolean done = inputOutput(buffer, new MessageWriter(ctx));
@@ -81,7 +82,7 @@ abstract class CodecBase extends ReplayingDecoder<VoidEnum> {
     /**
      * Parse and return the remote identity octets from a ZMTP/1.0 greeting.
      */
-    static byte[] readZMTP1RemoteIdentity(final ChannelBuffer buffer) throws ZMTPException {
+    static byte[] readZMTP1RemoteIdentity(final ByteBuf buffer) throws ZMTPException {
         final long len = ZMTPUtils.decodeLength(buffer);
         if (len > 256) {
             // spec says the ident string can be up to 255 chars

@@ -3,6 +3,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
 
+import io.netty.buffer.ByteBuf;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ public class CodecTest {
     public void testOverlyLongIdentity() throws Exception {
         byte[] overlyLong = new byte[256];
         Arrays.fill(overlyLong, (byte) 'a');
-        ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = ByteBuf.dynamicBuffer();
         ZMTPUtils.encodeLength(overlyLong.length + 1, buffer);
         buffer.writeByte(0);
         buffer.writeBytes(overlyLong);
@@ -30,7 +31,7 @@ public class CodecTest {
 
     @Test
     public void testLongZMTP1FrameLengthMissingLong() {
-        ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = ByteBuf.dynamicBuffer();
         buffer.writeByte(0xFF);
         long size = ZMTPUtils.decodeLength(buffer);
         Assert.assertEquals("Length shouldn't have been determined",
@@ -39,7 +40,7 @@ public class CodecTest {
 
     @Test
     public void testLongZMTP1FrameLengthWithLong() {
-        ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = ByteBuf.dynamicBuffer();
         buffer.writeByte(0xFF);
         buffer.writeLong(4);
         long size = ZMTPUtils.decodeLength(buffer);
@@ -49,7 +50,7 @@ public class CodecTest {
 
     @Test
     public void testZMTP1LenghtEmptyBuffer() {
-        ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+        ByteBuf buffer = ByteBuf.dynamicBuffer();
         long size = ZMTPUtils.decodeLength(buffer);
         Assert.assertEquals("Empty buffer should return -1 frame length",
                 -1, size);

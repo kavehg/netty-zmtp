@@ -18,6 +18,8 @@ package com.spotify.netty.handler.codec.zmtp;
 
 //import org.jboss.netty.buffer.ChannelBuffer;
 
+import io.netty.buffer.ByteBuf;
+
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
@@ -29,9 +31,9 @@ public class ZMTPFrame {
 
     public static final ZMTPFrame EMPTY_FRAME = create();
 
-    private final ChannelBuffer data;
+    private final ByteBuf data;
 
-    private ZMTPFrame(final ChannelBuffer data) {
+    private ZMTPFrame(final ByteBuf data) {
         this.data = data;
     }
 
@@ -62,7 +64,7 @@ public class ZMTPFrame {
      * <p/>
      * <p>Note: buffer contents and indices must not be modified.
      */
-    public ChannelBuffer getDataBuffer() {
+    public ByteBuf getDataBuffer() {
         if (data == null) {
             return EMPTY_BUFFER;
         } else {
@@ -127,7 +129,7 @@ public class ZMTPFrame {
     /**
      * Create a new frame from a channel buffer.
      */
-    public static ZMTPFrame create(final ChannelBuffer buf) {
+    public static ZMTPFrame create(final ByteBuf buf) {
         if (!buf.readable()) {
             return EMPTY_FRAME;
         } else {
@@ -164,9 +166,9 @@ public class ZMTPFrame {
      * @param length length of buffer
      * @return A {@link ZMTPFrame} containg the data read from the buffer.
      */
-    static public ZMTPFrame read(final ChannelBuffer buffer, final int length) {
+    static public ZMTPFrame read(final ByteBuf buffer, final int length) {
         if (length > 0) {
-            final ChannelBuffer data = buffer.readSlice(length);
+            final ByteBuf data = buffer.readSlice(length);
             return new ZMTPFrame(data);
         } else {
             return EMPTY_FRAME;

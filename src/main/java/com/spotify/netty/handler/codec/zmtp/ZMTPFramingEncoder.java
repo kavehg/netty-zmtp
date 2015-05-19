@@ -22,6 +22,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.ChannelHandlerContext;
 //import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -50,7 +51,7 @@ class ZMTPFramingEncoder extends OneToOneEncoder {
 
         final int size = ZMTPUtils.messageSize(
                 message, session.isEnveloped(), session.getActualVersion());
-        final ChannelBuffer buffer = ChannelBuffers.buffer(size);
+        final ByteBuf buffer = ByteBuf.buffer(size);
 
         ZMTPUtils.writeMessage(message, buffer, session.isEnveloped(), session.getActualVersion());
 

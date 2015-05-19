@@ -1,5 +1,6 @@
 package com.spotify.netty.handler.codec.zmtp;
 
+import io.netty.buffer.ByteBuf;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -22,12 +23,12 @@ public class ZMTP10Codec extends CodecBase {
     }
 
     @Override
-    protected ChannelBuffer onConnect() {
+    protected ByteBuf onConnect() {
         return makeZMTP1Greeting(session.getLocalIdentity());
     }
 
     @Override
-    boolean inputOutput(final ChannelBuffer buffer, final MessageWriter out) throws ZMTPException {
+    boolean inputOutput(final ByteBuf buffer, final MessageWriter out) throws ZMTPException {
         byte[] remoteIdentity = readZMTP1RemoteIdentity(buffer);
         if (listener != null) {
             listener.handshakeDone(1, remoteIdentity);
@@ -41,8 +42,8 @@ public class ZMTP10Codec extends CodecBase {
      *
      * @return a ChannelBuffer with a greeting
      */
-    private static ChannelBuffer makeZMTP1Greeting(byte[] localIdentity) {
-        ChannelBuffer out = ChannelBuffers.dynamicBuffer();
+    private static ByteBuf makeZMTP1Greeting(byte[] localIdentity) {
+        ByteBuf out = ByteBuf.dynamicBuffer();
         ZMTPUtils.encodeLength(localIdentity.length + 1, out);
         out.writeByte(0x00);
         out.writeBytes(localIdentity);

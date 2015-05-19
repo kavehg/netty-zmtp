@@ -21,6 +21,7 @@ package com.spotify.netty.handler.queue;
 //import org.jboss.netty.channel.ChannelStateEvent;
 //import org.jboss.netty.channel.MessageEvent;
 //import org.jboss.netty.handler.queue.BufferedWriteHandler;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -162,7 +163,7 @@ public class AutoFlushingWriteBatcher extends BufferedWriteHandler {
     super.writeRequested(ctx, e);
 
     // Calculate new size of outgoing message buffer
-    final ChannelBuffer data = (ChannelBuffer) e.getMessage();
+    final ByteBuf data = (ByteBuf) e.getMessage();
     final int newBufferSize = bufferSize.addAndGet(data.readableBytes());
 
     // Calculate how long it was since the last outgoing message

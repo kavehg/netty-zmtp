@@ -21,6 +21,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.ChannelHandlerContext;
 //import org.jboss.netty.channel.Channels;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -32,7 +33,7 @@ class MessageWriter {
         this.ctx = ctx;
     }
 
-    ChannelFuture write(ChannelBuffer msg) {
+    ChannelFuture write(ByteBuf msg) {
         final ChannelFuture future = Channels.future(ctx.getChannel());
         Channels.write(ctx, future, msg);
         return future;

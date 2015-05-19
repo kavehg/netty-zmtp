@@ -2,6 +2,7 @@ package com.spotify.netty.handler.codec.zmtp;
 
 //import org.jboss.netty.buffer.ChannelBuffer;
 //import org.jboss.netty.buffer.ChannelBuffers;
+import io.netty.buffer.ByteBuf;
 import org.junit.Assert;
 
 /**
@@ -17,19 +18,19 @@ class TestUtil {
         return bs;
     }
 
-    public static ChannelBuffer buf(int... bytes) {
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer(bytes.length);
+    public static ByteBuf buf(int... bytes) {
+        ByteBuf cb = ChannelBuffers.dynamicBuffer(bytes.length);
         cb.writeBytes(bytes(bytes));
         return cb;
     }
 
-    public static ChannelBuffer buf(byte[] data) {
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer(data.length);
+    public static ByteBuf buf(byte[] data) {
+        ByteBuf cb = ChannelBuffers.dynamicBuffer(data.length);
         cb.writeBytes(data);
         return cb;
     }
 
-    public static void cmp(ChannelBuffer buf, int... bytes) {
+    public static void cmp(ByteBuf buf, int... bytes) {
         cmp(buf, buf(bytes));
     }
 
@@ -39,7 +40,7 @@ class TestUtil {
      * @param expected the ChannelBuffer you expect
      * @param actual   the ChannelBuffer you actually got
      */
-    public static void cmp(ChannelBuffer expected, ChannelBuffer actual) {
+    public static void cmp(ByteBuf expected, ByteBuf actual) {
         int expectedPos = expected.readerIndex();
         int actualPos = actual.readerIndex();
         int expectedReadableCount = expected.readableBytes();
@@ -67,7 +68,7 @@ class TestUtil {
      * @param buf the ChannelBuffer to clone
      * @return a clone.
      */
-    public static ChannelBuffer clone(ChannelBuffer buf) {
+    public static ByteBuf clone(ByteBuf buf) {
         return ChannelBuffers.wrappedBuffer(buf.array());
     }
 

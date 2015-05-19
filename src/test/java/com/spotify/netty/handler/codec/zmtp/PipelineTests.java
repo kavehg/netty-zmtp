@@ -7,6 +7,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.ChannelStateEvent;
 //import org.jboss.netty.channel.Channels;
 //import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import org.junit.Assert;
@@ -33,7 +34,7 @@ public class PipelineTests {
      */
     @Test
     public void testPipelineTester() {
-        final ChannelBuffer buf = ChannelBuffers.wrappedBuffer("Hello, world".getBytes());
+        final ByteBuf buf = ByteBuf.wrappedBuffer("Hello, world".getBytes());
         ChannelPipeline pipeline = Channels.pipeline(new SimpleChannelUpstreamHandler() {
 
             @Override
@@ -46,10 +47,10 @@ public class PipelineTests {
         PipelineTester pipelineTester = new PipelineTester(pipeline);
         Assert.assertEquals(buf, pipelineTester.readClient());
 
-        ChannelBuffer another = ChannelBuffers.wrappedBuffer("foo".getBytes());
+        ByteBuf another = ByteBuf.wrappedBuffer("foo".getBytes());
         pipelineTester.writeClient(TestUtil.clone(another));
 
-        cmp(another, (ChannelBuffer) pipelineTester.readServer());
+        cmp(another, (ByteBuf) pipelineTester.readServer());
 
         another = ChannelBuffers.wrappedBuffer("bar".getBytes());
         pipelineTester.writeServer(TestUtil.clone(another));
@@ -115,7 +116,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer();
+        ByteBuf cb = ByteBuf.dynamicBuffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -144,7 +145,7 @@ public class PipelineTests {
         doTestZMTP1PipelineFragmentedHandshake(buf(4, 0, 0x62, 0x61), buf(0x72));
     }
 
-    private void doTestZMTP1PipelineFragmentedHandshake(ChannelBuffer first, ChannelBuffer second) {
+    private void doTestZMTP1PipelineFragmentedHandshake(ByteBuf first, ByteBuf second) {
         ZMTPSession s = new ZMTPSession(
                 ZMTPConnectionType.Addressed, 1024, "foo".getBytes(), ZMTPSocketType.REQ);
         ChannelPipeline p = Channels.pipeline(new ZMTP10Codec(s));
@@ -156,7 +157,7 @@ public class PipelineTests {
         pt.writeClient(first);
         pt.writeClient(second);
 
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer();
+        ByteBuf cb = ByteBuf.dynamicBuffer();
         // two octet envelope delimiter
         cb.writeBytes(bytes(0x01, 0x01));
         // content frame size + flag octet
@@ -186,7 +187,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer();
+        ByteBuf cb = ByteBuf.dynamicBuffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -224,7 +225,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer();
+        ByteBuf cb = ByteBuf.dynamicBuffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter
@@ -263,7 +264,7 @@ public class PipelineTests {
         PipelineTester pt = new PipelineTester(p);
         cmp(buf(0x04, 0, 0x66, 0x6f, 0x6f), pt.readClient());
 
-        ChannelBuffer cb = ChannelBuffers.dynamicBuffer();
+        ByteBuf cb = ByteBuf.dynamicBuffer();
         // handshake: length + flag + client identity octets "BAR"
         cb.writeBytes(buf(4, 0, 0x62, 0x61, 0x72));
         // two octet envelope delimiter

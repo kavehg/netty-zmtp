@@ -14,6 +14,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.local.LocalAddress;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.local.LocalAddress;
@@ -28,7 +29,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * and writing to it.
  */
 class PipelineTester {
-    private BlockingQueue<ChannelBuffer> emittedOutside = new LinkedBlockingQueue<ChannelBuffer>();
+    private BlockingQueue<ByteBuf> emittedOutside = new LinkedBlockingQueue<ByteBuf>();
     private BlockingQueue<Object> emittedInside = new LinkedBlockingQueue<Object>();
     private Channel outerChannel = null;
     private Channel innerChannel = null;
@@ -83,7 +84,7 @@ class PipelineTester {
      *
      * @return a ChannelBuffer from the the client FIFO
      */
-    public ChannelBuffer readClient() {
+    public ByteBuf readClient() {
         try {
             return emittedOutside.take();
         } catch (InterruptedException e) {
@@ -96,7 +97,7 @@ class PipelineTester {
      *
      * @param buf the ChannelBuffer to write
      */
-    public void writeClient(ChannelBuffer buf) {
+    public void writeClient(ByteBuf buf) {
         outerChannel.write(buf);
     }
 

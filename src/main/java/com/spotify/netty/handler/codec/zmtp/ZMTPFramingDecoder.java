@@ -21,6 +21,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.ChannelHandlerContext;
 //import org.jboss.netty.handler.codec.frame.FrameDecoder;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
@@ -46,7 +47,7 @@ class ZMTPFramingDecoder extends FrameDecoder {
      * Responsible for decoding incoming data to zmtp frames
      */
     @Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer)
+    protected Object decode(ChannelHandlerContext ctx, Channel channel, ByteBuf buffer)
             throws Exception {
 
         // Parse incoming frames
