@@ -12,11 +12,12 @@ package com.spotify.netty.handler.codec.zmtp;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
+import io.netty.handler.codec.ReplayingDecoder;
 
 /**
  * An abstract base class for common functionality to the ZMTP codecs.
  */
-abstract class CodecBase extends ReplayingDecoder<VoidEnum> {
+abstract class CodecBase extends ReplayingDecoder<Void> {
 
     protected final ZMTPSession session;
     protected HandshakeListener listener;
@@ -49,7 +50,7 @@ abstract class CodecBase extends ReplayingDecoder<VoidEnum> {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, Channel channel, ByteBuf buffer,
-                            VoidEnum _) throws ZMTPException {
+                            Void v) throws ZMTPException {
         buffer.markReaderIndex();
         boolean done = inputOutput(buffer, new MessageWriter(ctx));
         if (!done) {

@@ -11,7 +11,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 /**
- * Tests related to CodecBase and ZMTP*Codec
+ * Tests related to CodecBase and ZMTP Codec
  */
 public class CodecTest {
     @Test
