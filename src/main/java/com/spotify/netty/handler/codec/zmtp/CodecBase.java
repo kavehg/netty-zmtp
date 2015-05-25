@@ -14,6 +14,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.ReplayingDecoder;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * An abstract base class for common functionality to the ZMTP codecs.
  */
@@ -28,6 +30,13 @@ abstract class CodecBase extends ReplayingDecoder<Void> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        ctx.executor().schedule(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 1000l, TimeUnit.MILLISECONDS);
+
         super.channelActive(ctx);
     }
 
