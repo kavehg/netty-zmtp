@@ -13,6 +13,7 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.channel.local.DefaultLocalServerChannelFactory;
 //import org.jboss.netty.channel.local.LocalAddress;
 
+import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -61,7 +62,7 @@ class PipelineTester {
         sb.setPipeline(pipeline);
 
         sb.bind(address);
-        ClientBootstrap cb = new ClientBootstrap(new DefaultLocalClientChannelFactory());
+        Bootstrap cb = new Bootstrap();
         cb.getPipeline().addLast("1", new SimpleChannelHandler() {
             @Override
             public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)

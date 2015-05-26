@@ -10,9 +10,12 @@ package com.spotify.netty.handler.codec.zmtp;
 //import org.jboss.netty.handler.codec.replay.VoidEnum;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.ReplayingDecoder;
+import io.netty.util.concurrent.DefaultPromise;
+import io.netty.util.concurrent.EventExecutor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +23,8 @@ import java.util.concurrent.TimeUnit;
  * An abstract base class for common functionality to the ZMTP codecs.
  */
 abstract class CodecBase extends ReplayingDecoder<Void> {
+
+    private volatile ChannelHandlerContext ctx;
 
     protected final ZMTPSession session;
     protected HandshakeListener listener;
@@ -55,7 +60,7 @@ abstract class CodecBase extends ReplayingDecoder<Void> {
         });
 
         Channels.write(ctx, Channels.future(ctx.getChannel()), onConnect());
-        this.session.setChannel(ctx.getChannel());
+        this.session.setChannel(ctx.channel());
     }
 
     abstract ByteBuf onConnect();
@@ -113,5 +118,22 @@ abstract class CodecBase extends ReplayingDecoder<Void> {
         final byte[] identity = new byte[(int) len - 1];
         buffer.readBytes(identity);
         return identity;
+    }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        this.ctx = ctx;
+        super.handlerAdded(ctx);
+    }
+
+    private final class LazyChannelPromise extends DefaultPromise<Channel> {
+
+        @Override
+        protected EventExecutor executor() {
+            if (ctx == null) {
+                throw new IllegalStateException();
+            }
+            return ctx.executor();
+        }
     }
 }
